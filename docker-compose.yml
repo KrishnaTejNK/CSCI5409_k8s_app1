@@ -1,0 +1,21 @@
+services:
+  app1:
+    image: krishnatejnk/app1
+    ports:
+      - "6000:6000"
+    networks:
+      - app_network
+    volumes:
+      - .:/data
+
+  app2:
+    image: krishnatejnk/app2
+    networks:
+      - app_network
+    ports:
+      - "7000:7000"
+    volumes:
+      - .:/data
+networks:
+  app_network:
+    driver: bridge
