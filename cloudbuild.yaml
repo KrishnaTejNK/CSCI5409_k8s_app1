@@ -7,13 +7,13 @@ steps:
     args: ['push', 'us-central1-docker.pkg.dev/csci5409kubernetesassignment/app1-repo/app1:latest']
   # Authenticate with GKE
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['container', 'clusters', 'get-credentials', 'my-gke-cluster', '--region', 'us-central11', '--project', 'csci5409kubernetesassignment']
+    args: ['container', 'clusters', 'get-credentials', 'my-gke-cluster', '--region', 'us-central1', '--project', 'csci5409kubernetesassignment']
   # Deploy to GKE using kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'app1.yaml']
     env:
-      - 'CLOUDSDK_COMPUTE_REGION=us-central11'
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=my-gke-cluster'
 images:
   - 'us-central1-docker.pkg.dev/csci5409kubernetesassignment/app1-repo/app1:latest'
