@@ -1,10 +1,22 @@
 steps:
+  # Build the Docker image for app1
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'us-central1-docker.pkg.dev/csci5409kubernetesassignment/app1-repo/app1:latest', '.']
+  # Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/csci5409kubernetesassignment/app1-repo/app1:latest']
+  # Authenticate with GKE cluster (fixed to us-central1-a)
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['container', 'clusters', 'get-credentials', 'my-gke-cluster', '--region', 'us-central1-a', '--project', 'csci5409kubernetesassignment']
+    args:
+      - 'container'
+      - 'clusters'
+      - 'get-credentials'
+      - 'my-gke-cluster'
+      - '--region'
+      - 'us-central1-a'  # Corrected from us-central1
+      - '--project'
+      - 'csci5409kubernetesassignment'
+  # Deploy app1 to GKE using kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'app1.yaml']
     env:
