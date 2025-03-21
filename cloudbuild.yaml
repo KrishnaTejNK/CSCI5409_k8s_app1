@@ -13,7 +13,7 @@ steps:
       - 'get-credentials'
       - 'my-gke-cluster'
       - '--region'
-      - 'us-central1-a'  # Corrected from us-central1
+      - 'us-central1'  # Corrected from us-central1
       - '--project'
       - 'csci5409kubernetesassignment'
   # Deploy app1 to GKE using kubectl
