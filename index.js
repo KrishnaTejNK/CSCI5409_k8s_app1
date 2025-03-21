@@ -17,7 +17,7 @@ app.post('/store-file', async (req, res) => {
     }
 
     const filePath = path.join(PV_DIR, file);
-    console.log('Testing CI/CD');
+
     try {
         await fs.writeFile(filePath, data, 'utf8');
         return res.status(200).json({ file, message: 'Success.' });
