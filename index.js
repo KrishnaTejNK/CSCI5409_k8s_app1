@@ -17,9 +17,10 @@ app.post('/store-file', async (req, res) => {
     }
 
     const filePath = path.join(PV_DIR, file);
-
+    const newData = data.replace(", ", ",").replace("\n ", "\n");
+    
     try {
-        await fs.writeFile(filePath, data, 'utf8');
+        await fs.writeFile(filePath, newData, 'utf8');
         return res.status(200).json({ file, message: 'Success.' });
     } catch (error) {
         console.error('Error storing file:', error.message);
