@@ -8,7 +8,6 @@ app.use(express.json());
 
 const PV_DIR = '/krishna_PV_dir'; // Adjust if your first name differs
 
-// POST /store-file
 app.post('/store-file', async (req, res) => {
     const { file, data } = req.body;
 
@@ -18,9 +17,13 @@ app.post('/store-file', async (req, res) => {
 
     const filePath = path.join(PV_DIR, file);
     const newData = data.replace(", ", ",").replace("\n ", "\n");
-    
+
+    console.log('Writing to:', filePath);
+    console.log('Data being written:', newData);
+
     try {
         await fs.writeFile(filePath, newData, 'utf8');
+        console.log('File written successfully');
         return res.status(200).json({ file, message: 'Success.' });
     } catch (error) {
         console.error('Error storing file:', error.message);
