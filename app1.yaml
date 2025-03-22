@@ -1,16 +1,17 @@
+# app.yaml (replace app1.yaml)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app1-deployment
+  name: app-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app1
+      app: app
   template:
     metadata:
       labels:
-        app: app1
+        app: app
     spec:
       containers:
         - name: app1
@@ -20,9 +21,16 @@ spec:
           volumeMounts:
             - mountPath: "/krishna_PV_dir"
               name: shared-storage
+        - name: app2
+          image: us-central1-docker.pkg.dev/csci5409kubernetesassignment/app2-repo/app2:latest
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - mountPath: "/krishna_PV_dir"
+              name: shared-storage
       volumes:
         - name: shared-storage
-          emptyDir: {}  # Temporary shared volume
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
@@ -30,8 +38,20 @@ metadata:
   name: app1-service
 spec:
   selector:
-    app: app1
+    app: app
   ports:
     - port: 80
       targetPort: 6000
   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2
+spec:
+  selector:
+    app: app
+  ports:
+    - port: 5000
+      targetPort: 5000
+  type: ClusterIP
